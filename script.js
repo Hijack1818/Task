@@ -1,7 +1,49 @@
 // Call fetchReviews initially to load data when the page loads
 fetchReviews();
-let formVisible = false;
 
+// Function to edit a review
+function editReview(id, title, content) {
+  console.log(id, title, content);
+  // Show the form
+  toggleForm("update");
+  //paste the review data into the form
+  document.getElementById("titleUpdate").value = title;
+  document.getElementById("contentUpdate").value = content;
+  document.getElementById("idUpdate").value = id;
+}
+
+//fnction to update a review
+function updateReview() {
+  const title = document.getElementById("titleUpdate").value;
+  const content = document.getElementById("contentUpdate").value;
+  const _id = document.getElementById("idUpdate").value;
+  fetch(`http://localhost:5000/api/${_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, content }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Failed to update review");
+      }
+    })
+    .then(() => {
+      // After successfully updating the review, fetch fresh data
+      fetchReviews();
+      alert("Review has been updated.");
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("Failed to update review.");
+    });
+  toggleForm("update");
+}
+
+// Function to delete a review
 function deleteReview(id) {
   fetch(`http://localhost:5000/api/${id}`, {
     method: "DELETE",
@@ -25,6 +67,7 @@ function deleteReview(id) {
     });
 }
 
+// Function fetch review
 function fetchReviews() {
   fetch("http://localhost:5000/api")
     .then((res) => {
@@ -59,11 +102,12 @@ function updateTable(data) {
             <td>${review.title}</td>
             <td>${review.content}</td>
             <td>${review.createdAt}</td>
-            <td><a href="/${review._id}">Edit</a></td>
+            <td><button onclick="editReview(${review._id},'${review.title}','${
+      review.content
+    }')">Edit</button></td>
             <td><button onclick="deleteReview(${
               review._id
-            })">Delete</button></td>
-        `;
+            })">Delete</button></td>`;
     tableBody.appendChild(row);
   });
 }
@@ -97,19 +141,21 @@ function createReview() {
       console.error(err);
       alert("Failed to create review.");
     });
+  toggleForm("create");
 }
 
-function toggleForm() {
+// function to hide/show the form
+function toggleForm(catogery) {
+  //   console.log(catogery == "update");
   // Get a reference to the form element
-  const reviewForm = document.getElementById("reviewForm");
-
-  // Toggle the visibility of the form
-  if (formVisible) {
-    reviewForm.hidden = true; // Hide the form
-  } else {
-    reviewForm.hidden = false; // Show the form
+  let reviewForm;
+  if (catogery == "update") {
+    console.log("update");
+    reviewForm = document.getElementById("reviewFormUpdate");
+  }
+  if (catogery == "create") {
+    reviewForm = document.getElementById("reviewForm");
   }
 
-  // Update the formVisible variable
-  formVisible = !formVisible;
+  reviewForm.hidden = !reviewForm.hidden;
 }

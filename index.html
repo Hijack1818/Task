@@ -19,13 +19,15 @@
             </tr>
         </thead>
         <tbody id="reviewTableBody">
-            <!-- Reviews will be dynamically added here -->
         </tbody>
     </table>
-
-    <button onclick="toggleForm()">Add Review</button>
+    <br>
+    <br>
+    <button onclick='toggleForm("create")'>Add Review</button>
     <br><br>
     <form id="reviewForm" hidden>
+        <label>Create Form</label><br>
+
         <label for="id">ID:</label>
         <input type="text" id="id" name="_id"><br><br>
 
@@ -37,8 +39,23 @@
 
         <input type="button" value="Submit" onclick="createReview()">
     </form>
+    <br>
+    <br>
+    <form id="reviewFormUpdate" hidden>
 
+        <label>Update Form</label><br>
 
+        <label for="idUpdate">ID:</label>
+        <input type="text" id="idUpdate" name="_id" readonly><br><br>
+
+        <label for="titleUpdate">Title:</label>
+        <input type="text" id="titleUpdate" name="title"><br><br>
+
+        <label for="contentUpdate">Content:</label><br>
+        <textarea id="contentUpdate" name="content"></textarea><br><br>
+
+        <input type="button" value="Submit" onclick="updateReview()">
+    </form>
 
     <script src="./script.js">
 
