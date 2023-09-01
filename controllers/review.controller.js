@@ -3,7 +3,8 @@ const Review = require("../models/review.model");
 const getReviews = async (req, res) => {
   try {
     const review = await Review.find();
-    res.status(200).json(review);
+    // res.render("index", { review });
+    res.send({ status: 200, body: review });
   } catch (error) {
     res.status(500).json(error);
   }

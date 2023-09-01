@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 /* This is creating a new schema for the product model. */
 const reviewSchema = new Schema(
   {
-    id: {
+    _id: {
       type: Number,
       required: true,
     },
