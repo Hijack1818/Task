@@ -45,6 +45,10 @@ function updateReview() {
 
 // Function to delete a review
 function deleteReview(id) {
+  if (id == null) {
+    id = document.getElementById("idUpdate").value;
+  }
+
   fetch(`http://localhost:5000/api/${id}`, {
     method: "DELETE",
   })
@@ -108,6 +112,7 @@ function updateTable(data) {
             <td><button onclick="deleteReview(${
               review._id
             })">Delete</button></td>`;
+
     tableBody.appendChild(row);
   });
 }
@@ -158,4 +163,11 @@ function toggleForm(catogery) {
   }
 
   reviewForm.hidden = !reviewForm.hidden;
+}
+
+// Finction to reset the form
+function resetForm() {
+  document.getElementById("title").value = "";
+  document.getElementById("content").value = "";
+  document.getElementById("id").value = "";
 }

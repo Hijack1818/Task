@@ -38,6 +38,8 @@
         <textarea id="content" name="content"></textarea><br><br>
 
         <input type="button" value="Submit" onclick="createReview()">
+        <input type="button" value="Cancel" onclick='toggleForm("create")'>
+        <input type="reset" value="Reset" onclick="resetForm()">
     </form>
     <br>
     <br>
@@ -55,6 +57,7 @@
         <textarea id="contentUpdate" name="content"></textarea><br><br>
 
         <input type="button" value="Submit" onclick="updateReview()">
+        <input type="button" value="Delete" onclick="deleteReview(null)">
     </form>
 
     <script src="./script.js">
